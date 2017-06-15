@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://services/" xmlns:tns="http://services/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="addAlumno" type="tns:addAlumno"/>
+
+  <xs:element name="addAlumnoResponse" type="tns:addAlumnoResponse"/>
+
+  <xs:complexType name="addAlumno">
+    <xs:sequence>
+      <xs:element name="ap" type="tns:apoderado" minOccurs="0"/>
+      <xs:element name="asistencias" type="xs:int"/>
+      <xs:element name="curso" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="cantNotas" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="cantNotasAsig" type="xs:anyType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="apExis" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="apoderado">
+    <xs:sequence>
+      <xs:element name="hijos" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addAlumnoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

@@ -1,1 +1,3 @@
 # colegioweb
+
+Repositorio proyecto colegio 

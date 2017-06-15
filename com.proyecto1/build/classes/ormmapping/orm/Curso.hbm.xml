@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Curso" table="curso" lazy="false">
+		<id name="id_pk" column="id_pk" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="nivel" column="nivel" type="integer" length="1" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				nivel del curso
+			</meta>
+		</property>
+		<property name="letra" column="letra" type="character" length="1" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				letra del cruso (A o B)
+			</meta>
+		</property>
+		<set name="ORM_Alumno" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="cursoid_id_fk" not-null="false"/>
+			<one-to-many class="orm.Alumno"/>
+		</set>
+		<set name="ORM_Asignatura" lazy="true" cascade="save-update,lock" inverse="true">
+			<key column="cursoid_fk" not-null="false"/>
+			<one-to-many class="orm.Asignatura"/>
+		</set>
+	</class>
+</hibernate-mapping>

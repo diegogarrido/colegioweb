@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+}
+html{
+    font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
+}
+
+.header {
+    color: #777;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 5px;
+}
+
+.menu {
+    float: left;
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    display: block;
+}
+
+
+.div .md-button.md-raised{
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 88px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(54, 98, 247);
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+}
+
+.container {
+    width:500px;
+    height: 150px;
+    overflow-y: auto;
+}
+.container .md-button.md-raised {
+    display: block;
+    padding: 0 6px 0 6px;
+    margin: 6px 8px 6px 8px;
+    min-width: 88px;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    border-radius: 3px;
+    font-size: 14px;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration:none;
+    border: none;
+    outline: none;
+}
+.text-capitalize {
+    text-transform: capitalize; 
+}
+
+.md-fab:hover, .md-fab.md-focused {
+    background-color: #000 !important; 
+}
+
+p.note {
+    font-size: 1.2rem; 
+}
+
+.lock-size {
+    min-width: 300px;
+    min-height: 300px;
+    width: 300px;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto; 
+}

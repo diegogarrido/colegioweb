@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Alumno" table="alumno" lazy="false">
+		<id name="id_pk" column="id_pk" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<many-to-one name="apoderado_id_fk" column="apoderado_id_fk" class="orm.Apoderado" cascade="save-update,lock" unique="true" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<many-to-one name="cursoid_id_fk" cascade="lock" column="cursoid_id_fk" class="orm.Curso" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="curso" column="curso" type="string" length="5" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				curso al que pertenece
+			</meta>
+		</property>
+		<property name="nombre" column="nombre" type="string" length="30" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				&#160;nombre del alumno
+			</meta>
+		</property>
+		<property name="asistencia" column="asistencia" type="string" length="400" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				registro asistencia del alumno
+			</meta>
+		</property>
+		<property name="anotaciones" column="anotaciones" type="string" length="500" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				registro anotaciones del alumno
+			</meta>
+		</property>
+		<property name="notas" column="notas" type="string" length="1000" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				notas de asignatura que van al promedio
+			</meta>
+		</property>
+		<property name="notasAsig" column="notasAsig" type="string" length="1000" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				notas de taller por asignatura que se promedian para una nota de asignatura
+			</meta>
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Asignatura" table="asignatura" lazy="false">
+		<id name="id_pk" column="id_pk" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<many-to-one name="cursoid_fk" cascade="lock" column="cursoid_fk" class="orm.Curso" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<many-to-one name="profesorid_id_fk" cascade="lock" column="profesorid_id_fk" class="orm.Profesor" not-null="false" lazy="proxy" access="field">
+		</many-to-one>
+		<property name="nombre" column="nombre" type="string" length="30" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				nombre de la asignatura
+			</meta>
+		</property>
+		<property name="planificacion" column="planificacion" type="string" length="700" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				planificacion de la asignatura
+			</meta>
+		</property>
+	</class>
+</hibernate-mapping>

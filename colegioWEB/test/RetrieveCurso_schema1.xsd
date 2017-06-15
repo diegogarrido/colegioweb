@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://services/" xmlns:tns="http://services/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="retrieveCurso" type="tns:retrieveCurso"/>
+
+  <xs:element name="retrieveCursoResponse" type="tns:retrieveCursoResponse"/>
+
+  <xs:complexType name="retrieveCurso">
+    <xs:sequence>
+      <xs:element name="curso" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="retrieveCursoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:curso" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="curso">
+    <xs:sequence>
+      <xs:element name="alumnos" type="tns:alumno" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="asignaturas" type="tns:asignatura" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="letra" type="xs:unsignedShort"/>
+      <xs:element name="nivel" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="alumno">
+    <xs:sequence>
+      <xs:element name="anotaciones" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="apoderado" type="tns:apoderado" minOccurs="0"/>
+      <xs:element name="asistencia" type="xs:boolean" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="curso" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="notas" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="notasAsig" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="apoderado">
+    <xs:sequence>
+      <xs:element name="hijos" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="asignatura">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="planificacion" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="profesor" type="tns:profesor" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="profesor">
+    <xs:sequence>
+      <xs:element name="asignaturas" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

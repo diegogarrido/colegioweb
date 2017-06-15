@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+Licensee: Universidad de La Frontera
+License Type: Academic
+-->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="orm.Apoderado" table="apoderado" lazy="false">
+		<id name="id_pk" column="id_pk" type="integer" unsaved-value="0">
+			<generator class="increment">
+			</generator>
+		</id>
+		<property name="nombre" column="nombre" type="string" length="30" not-null="false" lazy="false">
+			<meta attribute="field-description">
+				nombre apoderado
+			</meta>
+		</property>
+		<property name="hijos" column="hijos" type="string" length="255" not-null="false" lazy="false"/>
+		<one-to-one name="alumno" class="orm.Alumno" cascade="save-update,lock" property-ref="apoderado_id_fk" lazy="proxy" access="field"/>
+	</class>
+</hibernate-mapping>
