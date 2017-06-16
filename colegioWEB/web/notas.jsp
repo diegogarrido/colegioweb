@@ -13,54 +13,52 @@
         <title>Notas del alumno ${alumno}</title>
         <script>
             function cambiarValue() {
-                var sel = document.getElementById("combobox").valueOf();
-                document.getElementById("texto").setAttribute("value",sel);
+                var sel = document.getElementById("combobox").NodeList();
+                document.getElementById("texto").setAttribute("value", sel);
             }
         </script>
-        <style>
-            table, th, td {
-                border: 1px solid black;
-                text-align:center;
-            }
-            html{
-                font-family: "Helvetica Neue","Helvetica","Arial","sans-serif";
-            }
-            .container {
-                width: available;
-                height: 250px;
-                overflow-y: auto;
-            }
-        </style>
+        <link rel="stylesheet" href="css/pagina.css" media="screen">
+        <link rel="stylesheet" href="css/combobox.css" media="screen">
+        <link rel="stylesheet" href="css/tabla.css" media="screen">
     </head>
     <body>
         <h1>Asignatura: ${asignatura}<br>Alumno: ${alumno}<br> Profesor: ${profesor}</h1>
         <div class="container">
-            <table style="width:100%">
-                <tr>
-                    <th>Actividad</th>
-                    <th>Nota</th>
-                    <th>Ponderación</th>
-                    <th>Fecha</th>
-                </tr>
-                ${notas}
-            </table>
+            <div class="datagrid">
+                <table style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Actividad</th>
+                            <th>Nota</th>
+                            <th>Ponderación</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${notas}
+                    </tbody>
+                </table>
+            </div>
         </div>
         <br>
         <form action="cambiarNota" method="post" style="text-align: center">
             <b>Cambiar Nota de una actividad:</b>
             <br>
-            <select name="idActividad">
-                <c:forEach var="i" begin="0" end="3">
-                    <option value="${i}">
-                        ${planificacion.get(i).split(",")[0]}
-                    </option>
-                </c:forEach>
-                <c:forEach var="i" begin="5" end="${planificacion.size()-1}">
-                    <option value="${i}">
-                        ${planificacion.get(i).split(",")[0]}
-                    </option>
-                </c:forEach>
-            </select>
+            <div class="styled-select slate" style="margin: auto">
+                <select name="idActividad" style="margin: auto">
+                    <c:forEach var="i" begin="0" end="3">
+                        <option value="${i}">
+                            ${planificacion.get(i).split(",")[0]}
+                        </option>
+                    </c:forEach>
+                    <c:forEach var="i" begin="5" end="${planificacion.size()-1}">
+                        <option value="${i}">
+                            ${planificacion.get(i).split(",")[0]}
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
+            <br>
             Ingrese nota
             <input type="number" name="nota" step="any" min="1.0" max="7.0">
             <input type="hidden" name="curso" value="${curso}">

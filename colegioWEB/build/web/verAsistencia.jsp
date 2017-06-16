@@ -10,19 +10,47 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Asistencia</title>
+        <link rel="stylesheet" href="css/pagina.css" media="screen">
+        <link rel="stylesheet" href="css/combobox.css" media="screen">
+        <link rel="stylesheet" href="css/tabla.css" media="screen">
     </head>
     <body>
-        <table>
-            <thead>
-                <tr>Día</tr>
-                <tr>¿Asistio?</tr>
-            </thead>
-            <c:forEach var="i" begin="0" end="${asistencia.size()}">
-                <tr>
-                    ${asistencia.get(i)}            
-                </tr>
-            </c:forEach>
-        </table>
+        <h3>Asistencia del alumno ${alumno}</h3>
+        <div class="container">
+            <div class="datagrid">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Día</th>
+                            <th>¿Asistió?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="i" begin="0" end="${asistencia.size()-1}">
+                            <c:choose>
+                                <c:when test="${i%2==0}"><tr></c:when>
+                                <c:when test="${i%2!=0}"><tr class="alt"></c:when>
+                                </c:choose>
+                                <td>
+                                    ${(i+1)}
+                                </td>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${asistencia.get(i)==true}">Si</c:when>
+                                        <c:when test="${asistencia.get(i)==false}">No</c:when>
+                                    </c:choose>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <p style="text-align: left">
+            <button type="button" onclick="window.location = 'index.jsp';"> 
+                Inicio
+            </button>
+        </p>
     </body>
 </html>

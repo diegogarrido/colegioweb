@@ -55,7 +55,11 @@ public class notas extends HttpServlet {
             int cont = 0;
             for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotas().size(); i++) {
                 if (cur.getAlumnos().get(idAlumno).getNotas().get(i).split(",")[2].equals(asignatura)) {
-                    notas += "<tr>";
+                    if (cont % 2 == 0) {
+                        notas += "<tr>";
+                    } else {
+                        notas += "<tr class=\"alt\">";
+                    }
                     notas += "<td>" + cur.getAsignaturas().get(idAsig).getPlanificacion().get(cont).split(",")[0] + "</td>";
                     String nota = cur.getAlumnos().get(idAlumno).getNotas().get(i).split(",")[0];
                     if (nota.equals("0")) {
@@ -68,9 +72,14 @@ public class notas extends HttpServlet {
                     cont++;
                 }
             }
+            
             for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotasAsig().size(); i++) {
                 if (cur.getAlumnos().get(idAlumno).getNotasAsig().get(i).split(",")[1].equals(asignatura)) {
-                    notas += "<tr>";
+                    if (cont % 2 == 0) {
+                        notas += "<tr>";
+                    } else {
+                        notas += "<tr class=\"alt\">";
+                    }
                     notas += "<td>" + cur.getAsignaturas().get(idAsig).getPlanificacion().get(cont).split(",")[0] + "</td>";
                     String nota = cur.getAlumnos().get(idAlumno).getNotasAsig().get(i).split(",")[0];
                     if (nota.equals("0")) {

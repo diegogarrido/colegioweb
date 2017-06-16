@@ -5,15 +5,15 @@
         <group name="capitulo 3">
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/index.jsp</file>
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/asignatura.java</file>
-            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/css/tabla.css</file>
-            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/css/index.css</file>
+            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/verAsistencia.jsp</file>
+            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/css/pagina.css</file>
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/notas.jsp</file>
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/notas.java</file>
+            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/cambiarActividad.java</file>
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/cambiarNota.java</file>
-            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/buscarCurso.java</file>
+            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/mensaje.jsp</file>
             <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/verCurso.jsp</file>
-            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/asignatura.jsp</file>
-            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/web/css/css.css</file>
+            <file>file:/C:/Users/Diego/Diego/Informatica/Java/colegioWEB/src/java/servlets/verAsistencia.java</file>
         </group>
     </open-files>
 </project-private>

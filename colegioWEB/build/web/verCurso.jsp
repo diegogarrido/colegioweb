@@ -49,6 +49,16 @@
                 <br>
                 <input type="submit" value="Ver notas"/>
             </form>
+            <form action="verAsistencia" method="post" style="text-align: center">
+                <input type="hidden" name="curso" value="${curso}"/>
+                <div class="styled-select slate" style="margin: auto">
+                    <select name="alumno">
+                        ${seleccion}
+                    </select>
+                </div>
+                <br>
+                <input type="submit" value="Ver Asistencia"/>
+            </form>
         </div>
         <p style="text-align: left; border-spacing: 10px;">
             <button type="button" onclick="window.location = 'index.jsp';"> 
