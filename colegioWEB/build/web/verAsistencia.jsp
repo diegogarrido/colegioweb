@@ -47,6 +47,19 @@
                 </table>
             </div>
         </div>
+        <form action="cambiarAsistencia" method="post" style="text-align: center">
+            <div class="styled-select slate">
+                <select name="idAsistencia">
+                    <c:forEach var="i" begin="0" end="${asistencia.size()-1}">
+                        <option value="${i}">Día ${(i+1)}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <input type="hidden" name="alumno" value="${alumno}">
+            <input type="hidden" name="curso" value="${curso}">
+            <input type="submit" value="Cambiar">
+        </form>
+
         <p style="text-align: left">
             <button type="button" onclick="window.location = 'index.jsp';"> 
                 Inicio

@@ -11,14 +11,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.CambiarAsistencia;
 import services.RetrieveCurso;
 
 /**
  *
  * @author Diego
  */
-@WebServlet(name = "verAsistencia", urlPatterns = {"/verAsistencia"})
-public class verAsistencia extends HttpServlet {
+@WebServlet(name = "cambiarAsistencia", urlPatterns = {"/cambiarAsistencia"})
+public class cambiarAsistencia extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,21 +33,39 @@ public class verAsistencia extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String alumno = request.getParameter("alumno");
-        String curso = request.getParameter("curso");
-        RetrieveCurso ret = new RetrieveCurso();
-        Curso cur = ret.retrieveCurso(curso);
-        int idAlumno = -1;
-        for(int i=0;i<cur.getAlumnos().size();i++){
-            if(cur.getAlumnos().get(i).getNombre().equals(alumno)){
-                idAlumno=i;
-                break;
+        String msg;
+        try {
+            int idAsistencia = Integer.parseInt(request.getParameter("idAsistencia"));
+            String alumno = request.getParameter("alumno");
+            System.out.println("alumno: "+alumno);
+            String curso = request.getParameter("curso");
+            System.out.println("curso: "+curso);
+            int idAlumno = -1;
+            RetrieveCurso r = new RetrieveCurso();
+            Curso cur = r.retrieveCurso(curso);
+            System.out.println("curso cargado");
+            for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
+                    idAlumno = i;
+                    break;
+                }
             }
+            System.out.println("idAlumno: "+idAlumno);
+            CambiarAsistencia c = new CambiarAsistencia();
+            cur = c.cambiar(idAlumno, curso, idAsistencia);
+            if (cur!=null) {
+                request.setAttribute("asistencia", cur.getAlumnos().get(idAlumno).getAsistencia());
+                request.setAttribute("alumno", alumno);
+                request.setAttribute("curso", curso);
+                request.getRequestDispatcher("verAsistencia.jsp").forward(request, response);
+            } else {
+                request.setAttribute("msg","Error");
+                request.getRequestDispatcher("mensaje.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            request.setAttribute("msg", e.getCause());
+            request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
-        request.setAttribute("asistencia", cur.getAlumnos().get(idAlumno).getAsistencia());
-        request.setAttribute("alumno", alumno);
-        request.setAttribute("curso", curso);
-        request.getRequestDispatcher("verAsistencia.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

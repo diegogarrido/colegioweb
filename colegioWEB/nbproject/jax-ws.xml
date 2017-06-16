@@ -28,6 +28,9 @@
     <service name="CambiarNota">
       <implementation-class>services.CambiarNota</implementation-class>
     </service>
+    <service name="CambiarAsistencia">
+      <implementation-class>services.CambiarAsistencia</implementation-class>
+    </service>
   </services>
   <clients/>
 </jax-ws>
