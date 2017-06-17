@@ -34,6 +34,7 @@ public class verAnotaciones extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        try{
         String alumno = request.getParameter("alumno");
         String curso = request.getParameter("curso");
         RetrieveCurso ret = new RetrieveCurso();
@@ -48,6 +49,9 @@ public class verAnotaciones extends HttpServlet {
         request.setAttribute("anotaciones", cur.getAlumnos().get(idAlumno).getAnotaciones());
         request.setAttribute("alumno", alumno);
         request.getRequestDispatcher("verAnotaciones.jsp").forward(request, response);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
