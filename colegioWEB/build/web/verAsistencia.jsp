@@ -47,8 +47,9 @@
                 </table>
             </div>
         </div>
+        <br>
         <form action="cambiarAsistencia" method="post" style="text-align: center">
-            <div class="styled-select slate">
+            <div class="styled-select slate" style="margin: auto">
                 <select name="idAsistencia">
                     <c:forEach var="i" begin="0" end="${asistencia.size()-1}">
                         <option value="${i}">Día ${(i+1)}</option>

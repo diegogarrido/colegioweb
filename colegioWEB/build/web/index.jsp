@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/pagina.css" media="screen">
         <link rel="stylesheet" href="css/combobox.css" media="screen">
         <link rel="stylesheet" href="css/tabla.css" media="screen">
+        <link rel="stylesheet" href="css/botones.css" media="screen">
     </head>
     <body>
         <h1>Bienvenido al gestor versión Web del Colegio</h1>
@@ -82,7 +83,7 @@
                     </select>
                 </div>
                 <br>
-                <input type="submit" value="Mostrar Curso"/>
+                <button type="submit" class="btn btn-4">Mostrar Curso</button>
             </form>
             <form class="column" action="addCurso" method="post" style="text-align: center">
                 <h3>
@@ -101,12 +102,12 @@
                     </select>
                 </div>
                 <br>
-                <input type="submit" value="Agregar Curso"/>
+                <button type="submit" class="btn btn-4">Agregar Curso</button>
             </form>
         </div>
         <form action="generate" method="get" style="text-align: center">
             <p style="text-align: center">
-                <input type="submit" value="Generar nuevo Colegio"/>
+                <button type="submit" class="btn btn-4">Generar nuevo Colegio</button>
             </p>
         </form>
     </body>

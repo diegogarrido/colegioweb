@@ -33,24 +33,19 @@ public class cambiarAsistencia extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String msg;
         try {
             int idAsistencia = Integer.parseInt(request.getParameter("idAsistencia"));
             String alumno = request.getParameter("alumno");
-            System.out.println("alumno: "+alumno);
             String curso = request.getParameter("curso");
-            System.out.println("curso: "+curso);
             int idAlumno = -1;
             RetrieveCurso r = new RetrieveCurso();
             Curso cur = r.retrieveCurso(curso);
-            System.out.println("curso cargado");
             for (int i = 0; i < cur.getAlumnos().size(); i++) {
                 if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
                     idAlumno = i;
                     break;
                 }
             }
-            System.out.println("idAlumno: "+idAlumno);
             CambiarAsistencia c = new CambiarAsistencia();
             cur = c.cambiar(idAlumno, curso, idAsistencia);
             if (cur!=null) {
