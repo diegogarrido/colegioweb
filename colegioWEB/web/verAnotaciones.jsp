@@ -25,32 +25,35 @@
                 </tr>
             </thead>
             <tbody>
+                <tr>
+                    <c:forEach var="i" begin="0" end="${anotaciones.size()}">
+                        <td>${anotaciones.get(i).split(",")[0]}</td>
+                        <td>${anotaciones.get(i).split(",")[1]}</td>
+                    </c:forEach>
+                </tr>
+            </tbody>
+        </table>
+        <form action="addAnotacion" method="post">
+            Escriba el motivo de la anotación: <input type="text" name="anotacion">
+            <select>
+                <option value="positiva">Positiva</option>
+                <option value="negativa">Negativa</option>
+            </select>
+            <input type="submit" value="Añadir anotación">
+        </form>
+        <form action="cambiarAnotacion" method="post">
+            <b> Eliga anotacion a modificar </b>        
+            <select name="idAnotacion" id="combobox" onchange="cambiarValue()">
                 <c:forEach var="i" begin="0" end="${anotaciones.size()}">
-                <td>${anotaciones.get(i).split(",")[0]}</td>
-                <td>${anotaciones.get(i).split(",")[1]}</td>
-            </c:forEach>
-        </tbody>
-    </table>
-    <form action="addAnotacion" method="post">
-        Escriba el motivo de la anotación: <input type="text" name="anotacion">
-        <select>
-            <option value="positiva">Positiva</option>
-            <option valie="negativa">Negativa</option>
-        </select>
-        <input type="submit" value="Añadir anotación">
-    </form>
-    <form action="cambiarAnotacion" method="post">
-        <b> Eliga anotacion a modificar </b>        
-        <select name="idAnotacion" id="combobox" onchange="cambiarValue()">
-            <c:forEach var="i" begin="0" end="${anotaciones.size()}">
-                <option>
-                    ${anotaciones.get(i).split(",")[1]}
-                </option>
-            </c:forEach>
-        </select>
-        <br>Re - escriba motivo de la anotacion</br>
-        <input type="text" name="descripcion" id="texto" value="${anotaciones.get(i).split(",")[1]}">
-        <input type="submit" value="Editar anotacion">
-    </form>
-</body>
+                    <option>
+                        ${anotaciones.get(i).split(",")[1]}
+                    </option>
+                </c:forEach>
+            </select>
+            <br>
+            Re - escriba motivo de la anotacion            
+            <input type="text" name="descripcion" id="texto" value="${anotaciones.get(i).split(",")[1]}">
+            <input type="submit" value="Editar anotacion">
+        </form>
+    </body>
 </html>
