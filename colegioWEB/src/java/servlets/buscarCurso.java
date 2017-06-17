@@ -60,7 +60,7 @@ public class buscarCurso extends HttpServlet {
                     alumnos += "<td>" + hijos + "</td>";
                     alumnos += "</tr>";
 
-                    sel += "<option value\"+" + cur.getAlumnos().get(i).getNombre() + "\">" + cur.getAlumnos().get(i).getNombre() + "</option>";
+                    sel += "<option value\"" + cur.getAlumnos().get(i).getNombre() + "\">" + cur.getAlumnos().get(i).getNombre() + "</option>";
                 }
                 if (cur.getAlumnos() == null) {
                     alumnos = "<td>El curso no existe</td>";

@@ -53,6 +53,7 @@ public class notas extends HttpServlet {
             }
             String profesor = cur.getAsignaturas().get(idAsig).getProfesor().getNombre();
             int cont = 0;
+            int ponderacion = 0;
             for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotas().size(); i++) {
                 if (cur.getAlumnos().get(idAlumno).getNotas().get(i).split(",")[2].equals(asignatura)) {
                     if (cont % 2 == 0) {
@@ -62,6 +63,7 @@ public class notas extends HttpServlet {
                     }
                     notas += "<td>" + cur.getAsignaturas().get(idAsig).getPlanificacion().get(cont).split(",")[0] + "</td>";
                     String nota = cur.getAlumnos().get(idAlumno).getNotas().get(i).split(",")[0];
+                    ponderacion += Integer.parseInt(cur.getAlumnos().get(idAlumno).getNotas().get(i).split(",")[1]);
                     if (nota.equals("0")) {
                         nota = "Pendiente";
                     }
@@ -72,7 +74,7 @@ public class notas extends HttpServlet {
                     cont++;
                 }
             }
-            
+
             for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotasAsig().size(); i++) {
                 if (cur.getAlumnos().get(idAlumno).getNotasAsig().get(i).split(",")[1].equals(asignatura)) {
                     if (cont % 2 == 0) {
@@ -92,6 +94,8 @@ public class notas extends HttpServlet {
                     cont++;
                 }
             }
+            request.setAttribute("ponderacion",ponderacion);
+            request.setAttribute("promedio", cur.getAlumnos().get(idAlumno).getPromedioAsignatura(asignatura));
             request.setAttribute("alumno", alumno);
             request.setAttribute("idAlumno", idAlumno);
             request.setAttribute("curso", curso);
