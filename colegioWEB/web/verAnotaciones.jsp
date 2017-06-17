@@ -25,19 +25,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <c:forEach var="i" begin="0" end="${anotaciones.size()}">
+                <c:forEach var="i" begin="0" end="${anotaciones.size()}">
+                    <tr>
                         <td>${anotaciones.get(i).split(",")[0]}</td>
                         <td>${anotaciones.get(i).split(",")[1]}</td>
-                    </c:forEach>
-                </tr>
+                    </tr>
+                </c:forEach>
             </tbody>
         </table>
         <form action="addAnotacion" method="post">
-            Escriba el motivo de la anotación: <input type="text" name="anotacion">
-            <select>
-                <option value="positiva">Positiva</option>
-                <option value="negativa">Negativa</option>
+            Escriba el motivo de la anotación: <input type="text" name="descripcion">
+            <select name="tipo">
+                <option value="Positiva">Positiva</option>
+                <option value="Negativa">Negativa</option>
             </select>
             <input type="submit" value="Añadir anotación">
         </form>
