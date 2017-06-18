@@ -5,6 +5,7 @@ package services;
 
 import com.proyecto1.Curso;
 import java.util.ArrayList;
+import javax.ejb.Stateless;
 import javax.jws.WebService;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -14,6 +15,7 @@ import javax.jws.WebParam;
  * @author Diego
  */
 @WebService(serviceName = "CambiarNota")
+@Stateless()
 public class CambiarNota {
 
     /**
@@ -26,17 +28,19 @@ public class CambiarNota {
         try {
             Curso cur = ret.retrieveCurso(curso);
             if (idActividad < 4) {
+                ArrayList<Integer> indexes = new ArrayList();
                 for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotas().size(); i++) {
                     if (cur.getAlumnos().get(idAlumno).getNotas().get(i).contains(asignatura)) {
-                        String not = cur.getAlumnos().get(idAlumno).getNotas().get(i + idActividad);
-                        String[] split = not.split(",");
-                        split[0] = nota;
-                        not = split[0] + "," + split[1] + "," + split[2];
-                        cur.getAlumnos().get(idAlumno).getNotas().set(i + idActividad, not);
-                        u.updateCurso(cur);
-                        return "Nota cambiada exitosamente";
+                        indexes.add(i);
                     }
                 }
+                String not = cur.getAlumnos().get(idAlumno).getNotas().get(indexes.get(idActividad));
+                String[] split = not.split(",");
+                split[0] = nota;
+                not = split[0] + "," + split[1] + "," + split[2];
+                cur.getAlumnos().get(idAlumno).getNotas().set(indexes.get(idActividad), not);
+                u.updateCurso(cur);
+                return "Nota cambiada exitosamente";
             } else {
                 ArrayList<Integer> indexes = new ArrayList();
                 for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotasAsig().size(); i++) {
@@ -44,7 +48,7 @@ public class CambiarNota {
                         indexes.add(i);
                     }
                 }
-                idActividad-=5;
+                idActividad -= 5;
                 String not = cur.getAlumnos().get(idAlumno).getNotasAsig().get(indexes.get(idActividad));
                 String[] split = not.split(",");
                 split[0] = nota;
@@ -57,6 +61,5 @@ public class CambiarNota {
         } catch (Exception ex) {
             return ex.getMessage();
         }
-        return null;
     }
 }

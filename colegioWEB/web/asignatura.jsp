@@ -15,8 +15,10 @@
         <title>Asignatura</title>
     </head>
     <body>
+        <h2 style="margin: 0px 0px 0px 35%;">Asignaturas</h2>
         <div class="row" style="text-align: center">
             <form class="column" action="notas" method="post">
+                <br><br>
                 <h3>Seleccione asignatura <br> para mostrar notas</h3>
                 <input type="hidden" name="curso" value="${curso}">
                 <input type="hidden" name="alumno" value="${alumno}">

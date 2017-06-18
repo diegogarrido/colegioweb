@@ -35,14 +35,15 @@
                 </table>
             </div>
         </div>
-        <b>Promedio de la Asignatura: </b>${promedio}
-        &emsp;
-        <b>Ponderación:</b>
-        <c:choose>
-            <c:when test="${ponderacion>100}">${ponderacion} Ajuste la ponderación a 100%!</c:when>
-            <c:when test="${ponderacion<=100}">${ponderacion}</c:when>
-        </c:choose>
-        <br>
+        <div style="text-align: center">
+            <b>Promedio de la Asignatura: </b>${promedio}
+            &emsp;&emsp;
+            <b>Ponderación:</b>
+            <c:choose>
+                <c:when test="${ponderacion>100}">${ponderacion} Ajuste la ponderación a 100%!</c:when>
+                <c:when test="${ponderacion<=100}">${ponderacion}</c:when>
+            </c:choose>
+        </div>
         <div class="row">
             <form class="column" action="cambiarNota" method="post" style="text-align: center">
                 <b>Cambiar Nota de una actividad:</b>
@@ -71,7 +72,22 @@
                 <br><br>
                 <button class="btn btn-4" type="submit">Cambiar nota</button>
             </form>
-            <form class="row" action="cambiarActividad" method="post" style="text-align: center">
+            <form class="column" action="addActividad" method="post" style="text-align: center">
+                <b>Agregar actividad:</b><br>
+                Descripción de la actividad o prueba
+                <input type="text" name="descripcion" required>
+                <br><br>
+                Fecha de la actividad
+                <input type="date" name="fecha" required>
+                <input type="hidden" name="idAsignatura" value="${idAsignatura}">
+                <input type="hidden" name="curso" value="${curso}">
+                <input type="hidden" name="asignatura" value="${asignatura}">
+                <br><br>
+                <button class="btn btn-4" type="submit">Añadir actividad</button>
+            </form>
+        </div>
+        <div class="row">
+            <form class="column" action="cambiarActividad" method="post" style="text-align: center">
                 <b>Modificar actividad:<br>(deje el campo en blanco si quiere mantener la información anterior)</b>
                 <br>Actividad:
                 <div class="styled-select slate" style="margin: auto">
