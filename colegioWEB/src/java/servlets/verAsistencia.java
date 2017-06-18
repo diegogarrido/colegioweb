@@ -32,21 +32,27 @@ public class verAsistencia extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String alumno = request.getParameter("alumno");
-        String curso = request.getParameter("curso");
-        RetrieveCurso ret = new RetrieveCurso();
-        Curso cur = ret.retrieveCurso(curso);
-        int idAlumno = -1;
-        for(int i=0;i<cur.getAlumnos().size();i++){
-            if(cur.getAlumnos().get(i).getNombre().equals(alumno)){
-                idAlumno=i;
-                break;
+        try {
+            String alumno = request.getParameter("alumno");
+            String curso = request.getParameter("curso");
+            RetrieveCurso ret = new RetrieveCurso();
+            Curso cur = ret.retrieveCurso(curso);
+            int idAlumno = -1;
+            for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
+                    idAlumno = i;
+                    break;
+                }
             }
+            request.setAttribute("idAlumno", idAlumno);
+            request.setAttribute("asistencia", cur.getAlumnos().get(idAlumno).getAsistencia());
+            request.setAttribute("alumno", alumno);
+            request.setAttribute("curso", curso);
+            request.getRequestDispatcher("verAsistencia.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("msg", "Error: "+e.getCause());
+            request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
-        request.setAttribute("asistencia", cur.getAlumnos().get(idAlumno).getAsistencia());
-        request.setAttribute("alumno", alumno);
-        request.setAttribute("curso", curso);
-        request.getRequestDispatcher("verAsistencia.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

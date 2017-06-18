@@ -47,43 +47,39 @@ public class addAlumno extends HttpServlet {
             String apoderado = request.getParameter("apoderado");
             AddAlumno add = new AddAlumno();
             Database dat = new Database();
-            try {
-                Curso cur = dat.retrieveCurso(curso);
-                Apoderado ap = null;
+            Curso cur = dat.retrieveCurso(curso);
+            Apoderado ap = null;
 
-                boolean exis = true;
-                if (apoderado.equals("Nuevo Apoderado")) {
-                    String nombreAp = request.getParameter("nombreApoderado");
-                    if (nombreAp.length() > 0 && !nombreAp.equals("null")) {
-                        String apellidoAp = request.getParameter("apellidoApoderado");
-                        nombreAp = ("" + nombreAp.charAt(0)).toUpperCase() + nombreAp.substring(1, nombreAp.length()).toLowerCase();
-                        apellidoAp = ("" + apellidoAp.charAt(0)).toUpperCase() + apellidoAp.substring(1, apellidoAp.length()).toLowerCase();
-                        exis = false;
-                        ap = new Apoderado(apellidoAp + " " + nombreAp);
-                    } else {
-                        request.setAttribute("msg", "Error: Ingrese un nombre para el Apoderado");
-                        RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
-                        dis.forward(request, response);
-                    }
+            boolean exis = true;
+            if (apoderado.equals("Nuevo Apoderado")) {
+                String nombreAp = request.getParameter("nombreApoderado");
+                if (nombreAp.length() > 0 && !nombreAp.equals("null")) {
+                    String apellidoAp = request.getParameter("apellidoApoderado");
+                    nombreAp = ("" + nombreAp.charAt(0)).toUpperCase() + nombreAp.substring(1, nombreAp.length()).toLowerCase();
+                    apellidoAp = ("" + apellidoAp.charAt(0)).toUpperCase() + apellidoAp.substring(1, apellidoAp.length()).toLowerCase();
+                    exis = false;
+                    ap = new Apoderado(apellidoAp + " " + nombreAp);
                 } else {
-                    for (int i = 0; i < cur.getAlumnos().size(); i++) {
-                        if (cur.getAlumnos().get(i).getApoderado().getNombre().equals(apoderado)) {
-                            ap = cur.getAlumnos().get(i).getApoderado();
-                        }
-                    }
-                }
-                if (apellido.toLowerCase().equals(ap.getNombre().split(" ")[0].toLowerCase())) {
-                    add.addAlumno(ap, cur.getAlumnos().get(0).getAsistencia().size(), curso, apellido + " " + nombre, cur.getAlumnos().get(0).getNotas(), cur.getAlumnos().get(0).getNotasAsig(), exis);
-                    request.setAttribute("msg", "Alumno añadido exitosamente");
-                    RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
-                    dis.forward(request, response);
-                } else {
-                    request.setAttribute("msg", "El apellido ingresado no coincide con el del apoderado");
+                    request.setAttribute("msg", "Error: Ingrese un nombre para el Apoderado");
                     RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
                     dis.forward(request, response);
                 }
-            } catch (PersistentException ex) {
-
+            } else {
+                for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                    if (cur.getAlumnos().get(i).getApoderado().getNombre().equals(apoderado)) {
+                        ap = cur.getAlumnos().get(i).getApoderado();
+                    }
+                }
+            }
+            if (apellido.toLowerCase().equals(ap.getNombre().split(" ")[0].toLowerCase())) {
+                add.addAlumno(ap, cur.getAlumnos().get(0).getAsistencia().size(), curso, apellido + " " + nombre, cur.getAlumnos().get(0).getNotas(), cur.getAlumnos().get(0).getNotasAsig(), exis);
+                request.setAttribute("msg", "Alumno añadido exitosamente");
+                RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
+                dis.forward(request, response);
+            } else {
+                request.setAttribute("msg", "El apellido ingresado no coincide con el del apoderado");
+                RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
+                dis.forward(request, response);
             }
         } catch (Exception e) {
             request.setAttribute("msg", "Error: " + e.getMessage());

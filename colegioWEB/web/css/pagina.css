@@ -12,7 +12,7 @@ html{
 {
     display: table;
     width: 100%; /*Optional*/
-    table-layout: auto; /*Optional*/
+    table-layout: fixed; /*Optional*/
     border-spacing: 10px; /*Optional*/
 }
 

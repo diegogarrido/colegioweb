@@ -11,15 +11,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.CambiarAsistencia;
-import services.RetrieveCurso;
+import services.AddAsistencia;
 
 /**
  *
  * @author Diego
  */
-@WebServlet(name = "cambiarAsistencia", urlPatterns = {"/cambiarAsistencia"})
-public class cambiarAsistencia extends HttpServlet {
+@WebServlet(name = "addAsistencia", urlPatterns = {"/addAsistencia"})
+public class addAsistencia extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,32 +33,23 @@ public class cambiarAsistencia extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            int idAsistencia = Integer.parseInt(request.getParameter("idAsistencia"));
-            String alumno = request.getParameter("alumno");
             String curso = request.getParameter("curso");
-            int idAlumno = -1;
-            RetrieveCurso r = new RetrieveCurso();
-            Curso cur = r.retrieveCurso(curso);
-            for (int i = 0; i < cur.getAlumnos().size(); i++) {
-                if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
-                    idAlumno = i;
-                    break;
-                }
-            }
-            CambiarAsistencia c = new CambiarAsistencia();
-            cur = c.cambiar(idAlumno, curso, idAsistencia);
-            if (cur!=null) {
+            String alumno = request.getParameter("alumno");
+            int idAlumno = Integer.parseInt(request.getParameter("idAlumno"));
+            AddAsistencia a = new AddAsistencia();
+            Curso cur = a.add(curso);
+            if (cur != null) {
                 request.setAttribute("asistencia", cur.getAlumnos().get(idAlumno).getAsistencia());
-                request.setAttribute("alumno", alumno);
                 request.setAttribute("idAlumno", idAlumno);
+                request.setAttribute("alumno", alumno);
                 request.setAttribute("curso", curso);
                 request.getRequestDispatcher("verAsistencia.jsp").forward(request, response);
             } else {
-                request.setAttribute("msg","Error");
+                request.setAttribute("msg", "Error");
                 request.getRequestDispatcher("mensaje.jsp").forward(request, response);
             }
         } catch (Exception e) {
-            request.setAttribute("msg", e.getCause());
+            request.setAttribute("msg", "Error: " + e.getCause());
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
