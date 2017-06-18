@@ -17,22 +17,27 @@
     </head>
     <body>
         <h3>Anotaciones del alumno ${alumno}</h3>
-        <table>
-            <thead>
-                <tr>
-                    <td>Tipo</td>
-                    <td>Descripción</td>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach var="i" begin="0" end="${anotaciones.size()}">
+        <div class="datagrid">
+            <table>
+                <thead>
                     <tr>
-                        <td>${anotaciones.get(i).split(",")[0]}</td>
-                        <td>${anotaciones.get(i).split(",")[1]}</td>
+                        <th>Tipo</th>
+                        <th>Descripción</th>
                     </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <c:forEach var="i" begin="0" end="${anotaciones.size()-1}">
+                        <c:choose>
+                            <c:when test="${i%2==0}"><tr></c:when>
+                            <c:when test="${i%2!=0}"><tr class="alt"></c:when>
+                            </c:choose>
+                            <td>${anotaciones.get(i).split(",")[0]}</td>
+                            <td>${anotaciones.get(i).split(",")[1]}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
+        </div>
         <form action="addAnotacion" method="post">
             Escriba el motivo de la anotación: <input type="text" name="descripcion">
             <select name="tipo">
@@ -44,7 +49,7 @@
         <form action="cambiarAnotacion" method="post">
             <b> Eliga anotacion a modificar </b>        
             <select name="idAnotacion" id="combobox" onchange="cambiarValue()">
-                <c:forEach var="i" begin="0" end="${anotaciones.size()}">
+                <c:forEach var="i" begin="0" end="${anotaciones.size()-1}">
                     <option>
                         ${anotaciones.get(i).split(",")[1]}
                     </option>

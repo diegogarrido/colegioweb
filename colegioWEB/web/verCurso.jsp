@@ -68,6 +68,7 @@
                     </select>
                 </div>
                 <br>
+                <input type="hidden" name="curso" value="${curso}"/>
                 <button class="btn btn-4" type="submit">Ver Anotaciones</button>
             </form>
         </div>

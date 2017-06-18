@@ -1,11 +1,8 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Autor: Diego Garrido
  */
 package servlets;
 
-import com.proyecto1.Curso;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -13,14 +10,13 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import services.RetrieveCurso;
 
 /**
  *
- * @author francisiron
+ * @author Diego
  */
-@WebServlet(name = "verAnotaciones", urlPatterns = {"/verAnotaciones"})
-public class verAnotaciones extends HttpServlet {
+@WebServlet(name = "addAnotacion", urlPatterns = {"/addAnotacion"})
+public class addAnotacion extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,28 +30,7 @@ public class verAnotaciones extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            String alumno = request.getParameter("alumno");
-            String curso = request.getParameter("curso");
-            RetrieveCurso ret = new RetrieveCurso();
-            Curso cur = ret.retrieveCurso(curso);
-            int idAlumno = 0;
-            for (int i = 0; i < cur.getAlumnos().size(); i++) {
-                if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
-                    idAlumno = i;
-                    break;
-                }
-            }
-            if (cur.getAlumnos().get(idAlumno).getAnotaciones().isEmpty()) {
-                cur.getAlumnos().get(idAlumno).getAnotaciones().add("Sin,Anotaciones");
-            }
-            request.setAttribute("anotaciones", cur.getAlumnos().get(idAlumno).getAnotaciones());
-            request.setAttribute("alumno", alumno);
-            request.getRequestDispatcher("verAnotaciones.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("msg", "Error: " + e.getCause());
-            request.getRequestDispatcher("mensaje.jsp").forward(request, response);
-        }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
