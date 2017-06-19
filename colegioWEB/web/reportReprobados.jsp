@@ -9,7 +9,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Reporte</title>
+        <title>Reporte de reprobados por curso</title>
         <link rel="stylesheet" href="css/pagina.css" media="screen">
         <link rel="stylesheet" href="css/botones.css" media="screen">
     </head>
