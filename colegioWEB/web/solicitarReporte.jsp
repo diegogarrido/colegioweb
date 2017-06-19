@@ -13,6 +13,7 @@
     </head>
     <body>
         <h3>Bienvenido al centro de reportes de la versión web del Colegio</h3>
+        <h4>Curso ${curso}</h4>
         <br>
         <form action="solicitarReporte" method="post">
             <b>Eliga el reporte que desea solicitar</b>
@@ -27,6 +28,7 @@
                 <option value="enviar">Planificacion para los apoderados</option>
             </select>
             <br>
+            <input type="hidden" name="curso" value="${curso}">
             <input type="submit" value="Solicitar">
         </form>
     </body>

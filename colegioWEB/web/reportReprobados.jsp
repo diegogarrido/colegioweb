@@ -10,15 +10,27 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reporte</title>
+        <link rel="stylesheet" href="css/pagina.css" media="screen">
+        <link rel="stylesheet" href="css/botones.css" media="screen">
     </head>
-    <body>        
-        <form action="InserteServlt" method="post">
-            <h3>Seleccione el curso</h3>
-            <select name="idCurso">
-                ${cursos}
-            </select>
-            <br>
-            <button type="submit">Elegir curso</button>
+    <body>
+        <h3 style="text-align: center">Reporte alumnos reprobados en el curso ${curso}</h3>
+        <form method="get" action="${url[0]}">
+            <button class="btn btn-4" type="submit">Descargar Word <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
         </form>
+        <form method="get" action="${url[1]}">
+            <button class="btn btn-4" type="submit">Descargar HTML <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
+        </form>
+        <form method="get" action="${url[2]}">
+            <button class="btn btn-4" type="submit">Descargar Excel <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
+        </form>
+        <form method="get" action="${url[3]}">
+            <button class="btn btn-4" type="submit">Descargar XML <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
+        </form>
+        <p>
+            <button type="button" class="btn btn-4" style="margin: 0px" onclick="window.location = 'index.jsp';"> 
+                Inicio
+            </button>
+        </p>
     </body>
 </html>

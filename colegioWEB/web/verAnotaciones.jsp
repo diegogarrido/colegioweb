@@ -60,5 +60,10 @@
             <input type="text" name="descripcion" id="texto" value="${anotaciones.get(i).split(",")[1]}">
             <input type="submit" value="Editar anotacion">
         </form>
+        <p>
+            <button type="button" class="btn btn-4" style="margin: 0px" onclick="window.location = 'index.jsp';"> 
+                Inicio
+            </button>
+        </p>
     </body>
 </html>

@@ -71,6 +71,11 @@
                 <input type="hidden" name="curso" value="${curso}"/>
                 <button class="btn btn-4" type="submit">Ver Anotaciones</button>
             </form>
+            <form class="column" action="solicitarReporte" method="post" style="text-align: center">
+                <br>
+                <input type="hidden" name="curso" value="${curso}"/>
+                <button class="btn btn-4" type="submit">Reportes</button>
+            </form>
         </div>
         <br><br><br><br>
         <p>
