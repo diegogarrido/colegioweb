@@ -4,6 +4,7 @@
 package services;
 
 import com.thoughtworks.xstream.XStream;
+import java.io.File;
 import java.io.FileInputStream;
 /*import java.beans.XMLEncoder;
 import java.io.FileNotFoundException;*/
@@ -43,6 +44,8 @@ public class Reportes {
             Source xml = new StreamSource(new StringReader(x.toXML(ob)));
             Source xslDoc = new StreamSource(new FileInputStream(xsl));
             xsl = xsl.split("xslt")[0];
+            File directorio = new File(xsl+"/reportes");
+            directorio.mkdirs();
             OutputStream docFile = new FileOutputStream(xsl + "/reportes/" + nombre + ".doc");
             TransformerFactory tFactory = TransformerFactory.newInstance();
             Transformer trasform = tFactory.newTransformer(xslDoc);
