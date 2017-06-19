@@ -69,8 +69,14 @@ public class solicitarReporte extends HttpServlet {
                     }
                     String[] url = new String[4];
                     ServletContext s = getServletContext();
-                    if (reportes.word(datos, "reprobados" + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")) {
+                    if (reportes.word(datos, "reprobados" + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")
+                            && reportes.html(datos, "reprobados" + curso.replaceAll(" ", ""), s.getRealPath("/xslt/html.xsl")).contains("Exito")
+                            && reportes.excel(datos, "reprobados" + curso.replaceAll(" ", ""), s.getRealPath("/xslt/excel.xsl")).contains("Exito")
+                            && reportes.xml(datos, "reprobados" + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")) {
                         url[0] = "reportes/reprobados" + curso.replaceAll(" ", "") + ".doc";
+                        url[1] = "reportes/reprobados" + curso.replaceAll(" ", "") + ".html";
+                        url[2] = "reportes/reprobados" + curso.replaceAll(" ", "") + ".xls";
+                        url[3] = "reportes/reprobados" + curso.replaceAll(" ", "") + ".xml";
                         request.setAttribute("url", url);
                         request.setAttribute("curso", curso);
                         request.getRequestDispatcher("reportReprobados.jsp").forward(request, response);
@@ -81,7 +87,7 @@ public class solicitarReporte extends HttpServlet {
                     break;
             }
         } catch (Exception e) {
-            request.setAttribute("msg", "Error "+e.getLocalizedMessage());
+            request.setAttribute("msg", "Error " + e.getLocalizedMessage());
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }

@@ -55,4 +55,69 @@ public class Reportes {
             return "Error: " + ex;
         }
     }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "html")
+    public String html(@WebParam(name = "datos") Object ob, @WebParam(name = "nombre") String nombre, @WebParam(name = "xsl") String xsl) {
+        try {
+            XStream x = new XStream();
+            Source xml = new StreamSource(new StringReader(x.toXML(ob)));
+            Source xslDoc = new StreamSource(new FileInputStream(xsl));
+            xsl = xsl.split("xslt")[0];
+            File directorio = new File(xsl+"/reportes");
+            directorio.mkdirs();
+            OutputStream docFile = new FileOutputStream(xsl + "/reportes/" + nombre + ".html");
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer trasform = tFactory.newTransformer(xslDoc);
+            trasform.transform(xml, new StreamResult(docFile));
+            return "Exito html";
+        } catch (Exception ex) {
+            return "Error: " + ex;
+        }
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "excel")
+    public String excel(@WebParam(name = "datos") Object ob, @WebParam(name = "nombre") String nombre, @WebParam(name = "xsl") String xsl) {
+        try {
+            XStream x = new XStream();
+            Source xml = new StreamSource(new StringReader(x.toXML(ob)));
+            Source xslDoc = new StreamSource(new FileInputStream(xsl));
+            xsl = xsl.split("xslt")[0];
+            File directorio = new File(xsl+"/reportes");
+            directorio.mkdirs();
+            OutputStream docFile = new FileOutputStream(xsl + "/reportes/" + nombre + ".xls");
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer trasform = tFactory.newTransformer(xslDoc);
+            trasform.transform(xml, new StreamResult(docFile));
+            return "Exito excel";
+        } catch (Exception ex) {
+            return "Error: " + ex;
+        }
+    }
+    
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "xml")
+    public String xml(@WebParam(name = "datos") Object ob, @WebParam(name = "nombre") String nombre, @WebParam(name = "xsl") String xsl) {
+        try {
+            XStream x = new XStream();
+            Source xml = new StreamSource(new StringReader(x.toXML(ob)));
+            xsl = xsl.split("xslt")[0];
+            File directorio = new File(xsl+"/reportes");
+            directorio.mkdirs();
+            OutputStream docFile = new FileOutputStream(xsl + "/reportes/" + nombre + ".xml");
+            TransformerFactory tFactory = TransformerFactory.newInstance();
+            Transformer trasform = tFactory.newTransformer();
+            trasform.transform(xml, new StreamResult(docFile));
+            return "Exito excel";
+        } catch (Exception ex) {
+            return "Error: " + ex;
+        }
+    }
 }

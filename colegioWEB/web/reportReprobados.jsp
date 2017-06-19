@@ -19,7 +19,7 @@
             <button class="btn btn-4" type="submit">Descargar Word <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
         </form>
         <form method="get" action="${url[1]}">
-            <button class="btn btn-4" type="submit">Descargar HTML <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
+            <button class="btn btn-4" type="submit">Ver HTML <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
         </form>
         <form method="get" action="${url[2]}">
             <button class="btn btn-4" type="submit">Descargar Excel <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
