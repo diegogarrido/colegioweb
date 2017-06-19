@@ -11,7 +11,15 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
-        <h1>Hello World!</h1>
+    <body>       
+        <form action="InserteServlt" method="post">
+            <h3>Seleccione el curso</h3>
+            <br>
+            <select name="idCurso">
+                ${cursos}
+            </select>
+            <br>
+            <button type="submit">Elegir curso</button>
+        </form>
     </body>
 </html>

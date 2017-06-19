@@ -12,30 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h3>Porcentaje de notas y asistencia</h3>
-        <br>
-        <h4>Alumno: ${alumno}</h4>
-        <br>
-        <h4>Asistencia: ${asistencia}%</h4>
-        <br>
-        <h4>Notas:</h4>
-        <br>
-        <h4>%{asignatura}: ${promedios}</h4>
-        <table>
-            <thead>
-                <tr>
-                    <th>Actividad</th>
-                    <th>Nota</th>
-                    <th>Ponderacion</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${notas}
-            </tbody>
-        </table>
+        <form action="ingreseServlt" method="post">
+            <h3>Seleccione un alumno</h3>
             <br>
-            <h4>Promedio General: ${promediosGenerales}</h4>
-            <h4>Promedio rojos: ${promediosRojos}</h4>
-            <h4>${condicion}</h4>
+            <select name="idAlumno">
+                ${alumnos}
+            </select>
+            <br>
+            <button type="submit">Elegir alumno</button>
+        </form>
     </body>
 </html>

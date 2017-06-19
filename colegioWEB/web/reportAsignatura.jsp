@@ -12,6 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="ingreseServlt" method="post">
+            <h3>Seleccione un profesor</h3>
+            <br>
+            <select name="sel">
+                ${profesores}
+            </select>
+            <br>
+            <button type="submit">Elegir profesor</button>
+        </form>
     </body>
 </html>

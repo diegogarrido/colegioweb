@@ -12,6 +12,14 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <form action="ingreseServlt" method="post">
+            <h3>Eliga apoderado para crear reporte(s)</h3>
+            <br>
+            <select name="idApoderado">
+                ${apoderados}
+            </select>
+            <br>
+            <button type="submit">Aceptar</button>
+        </form>
     </body>
 </html>

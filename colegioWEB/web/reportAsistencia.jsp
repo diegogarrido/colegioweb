@@ -12,18 +12,10 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h3>Alumnos del curso ${curso} con porcentaje de asistencia bajo el ${porcentaje}%</h3>
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Porcentaje de asistencia</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${alumnosAsistencia}
-            </tbody>
-        </table>
+        <form action="ingreseServlt" method="post">
+            <h3>Ingrese porcentaje limite</h3>
+            <input type="text" name="por">
+            <button type="submit">Aceptar</button>
+        </form>
     </body>
 </html>

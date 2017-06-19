@@ -11,19 +11,14 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Reporte</title>
     </head>
-    <body>
-        <h3>Alumnos del ${curso} en estado de repitencia</h3>
-        <br>
-        <table>
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Razón de repitencia</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${alumnosRepitentes}
-            </tbody>
-        </table>
+    <body>        
+        <form action="InserteServlt" method="post">
+            <h3>Seleccione el curso</h3>
+            <select name="idCurso">
+                ${cursos}
+            </select>
+            <br>
+            <button type="submit">Elegir curso</button>
+        </form>
     </body>
 </html>
