@@ -26,7 +26,7 @@
                     <option value="asistencia">Ver estudiantes con asistencia X</option>
                     <option value="porcentaje">Porcentaje de Notas/Asistencia</option>
                     <option value="asignatura">Ver Promedios por Asignatura</option>
-                    <option value="planificacion">Planificacion/Notas/Anotaciones</option>
+                    <option value="planificacion">Información de todo el curso</option>
                     <option value="alumnos">Apoderados con mas de un alumno</option>
                     <option value="enviar">Planificacion para los apoderados</option>
                 </select>
