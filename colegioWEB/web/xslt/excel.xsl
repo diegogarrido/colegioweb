@@ -2,9 +2,13 @@
     <xsl:template match="/list">
         <Row>
             <xsl:for-each select="object-array">
-                <Row>
-                    <xsl:value-of select="string"/>
-                </Row>
+                <xsl:choose>
+                    <xsl:when test='not(contains(string,"&lt;") and contains(string,"&gt;"))'>
+                        <Row>
+                            <xsl:value-of select="string"/>
+                        </Row>
+                    </xsl:when>
+                </xsl:choose>
             </xsl:for-each>   
         </Row>
     </xsl:template>

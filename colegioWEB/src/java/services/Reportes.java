@@ -115,7 +115,7 @@ public class Reportes {
             TransformerFactory tFactory = TransformerFactory.newInstance();
             Transformer trasform = tFactory.newTransformer();
             trasform.transform(xml, new StreamResult(docFile));
-            return "Exito excel";
+            return "Exito xml";
         } catch (Exception ex) {
             return "Error: " + ex;
         }

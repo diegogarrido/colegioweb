@@ -11,7 +11,7 @@ Autor: Diego Garrido
         <link rel="stylesheet" href="css/botones.css" media="screen">
     </head>
     <body>
-        <h1 style="text-align: center">${msg}</h1>
+        ${msg}
         <p>
             <button type="button" class="btn btn-4" style="margin: auto" onclick="window.location = 'index.jsp';"> 
                 Inicio

@@ -7,6 +7,8 @@ import com.proyecto1.Curso;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -58,16 +60,13 @@ public class solicitarReporte extends HttpServlet {
             }
             switch (tipo) {
                 case ("null"):
-                    /*cargar y enviar el curso como objeto quizás?
-                    RetrieveCurso r = new RetrieveCurso();
-                    Curso cur = r.retrieveCurso(curso);
-                    request.setAttribute("objCurso",cur);
-                     */
                     request.setAttribute("curso", curso);
                     request.getRequestDispatcher("solicitarReporte.jsp").forward(request, response);
                     break;
                 case ("reprobados"):
-                    datos.add(new Object[]{"Alumnos del curso " + curso + " en estado de repitencia"});
+                    datos.add(new Object[]{"<b>"});
+                    datos.add(new Object[]{"Alumnos del curso " + curso + " en estado de repitencia:"});
+                    datos.add(new Object[]{"</b>"});
                     for (int i = 0; i < cur.getAlumnos().size(); i++) {
                         if (cur.getAlumnos().get(i).estaReprobando()) {
                             datos.add(new Object[]{cur.getAlumnos().get(i).getNombre() + " por " + cur.getAlumnos().get(i).razonReprobado()});
@@ -76,13 +75,105 @@ public class solicitarReporte extends HttpServlet {
                     generar(datos, curso, s, url, request, response, tipo, "reportReprobados.jsp");
                     break;
                 case ("asistencia"):
+                    int porcentaje = -1;
+                    if (request.getParameter("porcentaje") != null) {
+                        porcentaje = Integer.parseInt(request.getParameter("porcentaje"));
+                        datos.add(new Object[]{"<b>"});
+                        datos.add(new Object[]{"Alumnos del curso " + curso + " con porcentaje de asistencia bajo " + porcentaje + "%:"});
+                        datos.add(new Object[]{"</b>"});
+                        for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                            if (Double.parseDouble(cur.getAlumnos().get(i).getPorcentajeAsistencia().replaceAll("%", "")) < porcentaje) {
+                                datos.add(new Object[]{cur.getAlumnos().get(i).getNombre() + " con " + cur.getAlumnos().get(i).getPorcentajeAsistencia()});
+                                datos.add(new Object[]{"<br>"});
+                            }
+                        }
+                        String msg = "<h3 style=\"text-align: center\">Reporte alumnos del curso " + curso + " con porcentaje bajo " + porcentaje + "%</h3>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".doc\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Word <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".html\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver HTML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xls\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Excel <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xml\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver XML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "            <h5 style=\"text-align: center\">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>";
+                        generarMsg(datos, curso, s, request, response, tipo, msg);
+                    } else {
+                        request.setAttribute("curso", curso);
+                        request.setAttribute("reportType", tipo);
+                        request.getRequestDispatcher("reportAsistencia.jsp").forward(request, response);
+                    }
                     break;
                 case ("porcentaje"):
+                    int idAlumno = -1;
+                    if (request.getParameter("idAlumno") != null) {
+                        idAlumno = Integer.parseInt(request.getParameter("idAlumno"));
+                        int rojos = 0;
+                        datos.add(new Object[]{"<b>"});
+                        datos.add(new Object[]{"Reporte porcentaje de asistencia y notas:"});
+                        datos.add(new Object[]{"</b>"});
+                        datos.add(new Object[]{"Alumno: " + cur.getAlumnos().get(idAlumno).getNombre()});
+                        datos.add(new Object[]{"Porcentaje asistencia: " + cur.getAlumnos().get(idAlumno).getPorcentajeAsistencia()});
+                        datos.add(new Object[]{"Notas: "});
+                        for (int i = 0; i < cur.getAsignaturas().size(); i++) {
+                            datos.add(new Object[]{cur.getAsignaturas().get(i).getNombre() + ": (Promedio: " + cur.getAlumnos().get(idAlumno).getPromedioAsignatura(cur.getAsignaturas().get(i).getNombre()) + ")"});
+                            if (Double.parseDouble(cur.getAlumnos().get(idAlumno).getPromedioAsignatura(cur.getAsignaturas().get(i).getNombre())) < 4.0) {
+                                rojos++;
+                            }
+                            int cont = 0;
+                            for (int j = 0; j < cur.getAlumnos().get(idAlumno).getNotas().size(); j++) {
+                                if (cur.getAlumnos().get(idAlumno).getNotas().get(j).contains(cur.getAsignaturas().get(i).getNombre())) {
+                                    datos.add(new Object[]{"Actividad: " + cur.getAsignaturas().get(i).getPlanificacion().get(cont).split(",")[0] + " Nota: " + cur.getAlumnos().get(idAlumno).getNotas().get(j).split(",")[0] + " Ponderacion: " + cur.getAlumnos().get(idAlumno).getNotas().get(j).split(",")[1] + "%"});
+                                    cont++;
+                                }
+                            }
+                        }
+                        datos.add(new Object[]{"Promedio General: " + cur.getAlumnos().get(idAlumno).getPromedio()});
+                        datos.add(new Object[]{"Promedios rojos: " + rojos});
+                        if (cur.getAlumnos().get(idAlumno).estaReprobando()) {
+                            datos.add(new Object[]{"<font color=\"red\">"});
+                            datos.add(new Object[]{"Condicion: No Aprueba"});
+                            datos.add(new Object[]{"Por: "+cur.getAlumnos().get(idAlumno).razonReprobado()});
+                            datos.add(new Object[]{"</font>"});
+                        } else {
+                            datos.add(new Object[]{"<font color=\"green\">"});
+                            datos.add(new Object[]{"Condicion: Aprueba"});
+                            datos.add(new Object[]{"</font>"});
+                        }
+                        tipo+=" "+cur.getAlumnos().get(idAlumno).getNombre();
+                        String msg = "<h3 style=\"text-align: center\">Reporte Porcentaje de asistencia y notas del alumno"+cur.getAlumnos().get(idAlumno).getNombre()+"</h3>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".doc\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Word <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".html\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver HTML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xls\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Excel <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xml\">\n"
+                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver XML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                                + "        </form>\n"
+                                + "            <h5 style=\"text-align: center\">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>";
+                        generarMsg(datos, curso, s, request, response, tipo, msg);
+                    } else {
+                        request.setAttribute("curso", curso);
+                        request.setAttribute("reportType", tipo);
+                        request.setAttribute("alumnos", cur.getAlumnos());
+                        request.getRequestDispatcher("reportPorcentaje.jsp").forward(request, response);
+                    }
                     break;
                 case ("asignatura"):
                     break;
                 case ("planificacion"):
                     for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                        datos.add(new Object[]{"<b>"});
+                        datos.add(new Object[]{"Información de todo el curso:"});
+                        datos.add(new Object[]{"</b>"});
                         datos.add(new Object[]{"Alumno: " + cur.getAlumnos().get(i).getNombre() + " Apoderado: " + cur.getAlumnos().get(i).getApoderado().getNombre()});
                         datos.add(new Object[]{"Anotaciones: "});
                         if (cur.getAlumnos().get(i).getAnotaciones().isEmpty()) {
@@ -95,12 +186,18 @@ public class solicitarReporte extends HttpServlet {
                         datos.add(new Object[]{"Porcentaje asistencia: " + cur.getAlumnos().get(i).getPorcentajeAsistencia()});
                         datos.add(new Object[]{"Promedio general: " + cur.getAlumnos().get(i).getPromedio()});
                         for (int j = 0; j < cur.getAsignaturas().size(); j++) {
-                            datos.add(new Object[]{"Notas " + cur.getAsignaturas().get(j).getNombre() + " Profesor: " + cur.getAsignaturas().get(j).getProfesor().getNombre() + " Promedio: " + cur.getAlumnos().get(i).getPromedioAsignatura(cur.getAsignaturas().get(j).getNombre())});
+                            datos.add(new Object[]{"Notas " + cur.getAsignaturas().get(j).getNombre()});
+                            datos.add(new Object[]{"Profesor: " + cur.getAsignaturas().get(j).getProfesor().getNombre()});
+                            datos.add(new Object[]{"Promedio: " + cur.getAlumnos().get(i).getPromedioAsignatura(cur.getAsignaturas().get(j).getNombre())});
                             int cont = 0;
                             datos.add(new Object[]{"Notas de Pruebas y Promedio Actividades. (Nota 0 significa pendiente)"});
                             for (int k = 0; k < cur.getAlumnos().get(i).getNotas().size(); k++) {
                                 if (cur.getAlumnos().get(i).getNotas().get(k).contains(cur.getAsignaturas().get(j).getNombre())) {
-                                    datos.add(new Object[]{cur.getAsignaturas().get(j).getPlanificacion().get(cont).split(",")[0] + ": " + cur.getAlumnos().get(i).getNotas().get(k).split(",")[0] + " Fecha: " + cur.getAsignaturas().get(j).getPlanificacion().get(cont).split(",")[2]});
+                                    if (cont == 4) {
+                                        datos.add(new Object[]{cur.getAsignaturas().get(j).getPlanificacion().get(cont).split(",")[0] + ": " + cur.getAlumnos().get(i).getNotas().get(k).split(",")[0]});
+                                    } else {
+                                        datos.add(new Object[]{cur.getAsignaturas().get(j).getPlanificacion().get(cont).split(",")[0] + ": " + cur.getAlumnos().get(i).getNotas().get(k).split(",")[0] + " Fecha: " + cur.getAsignaturas().get(j).getPlanificacion().get(cont).split(",")[2]});
+                                    }
                                     cont++;
                                 }
                             }
@@ -112,20 +209,22 @@ public class solicitarReporte extends HttpServlet {
                                     cont++;
                                 }
                             }
+                            datos.add(new Object[]{"<br>"});
                         }
-                        generar(datos, curso, s, url, request, response, tipo, "reportPlanificacion.jsp");
                     }
+                    generar(datos, curso, s, url, request, response, tipo, "reportPlanificacion.jsp");
                     break;
                 case ("alumnos"):
-                    datos.add(new Object[]{"Apoderados con mas de un hijo en el curso " + curso + ": "});
+                    datos.add(new Object[]{"<b>"});
+                    datos.add(new Object[]{"Apoderados con más de un hijo en el curso " + curso + ": "});
+                    datos.add(new Object[]{"</b>"});
                     String exis = "";
                     for (int i = 0; i < cur.getAlumnos().size(); i++) {
                         if (cur.getAlumnos().get(i).getApoderado().getHijos().size() > 1 && !exis.contains(cur.getAlumnos().get(i).getNombre().split(" ")[0])) {
-                            datos.add(new Object[]{"Nombre: " + cur.getAlumnos().get(i).getApoderado().getNombre()});
-                            datos.add(new Object[]{"Hijos: "});
-                            datos.add(new Object[]{cur.getAlumnos().get(i).getApoderado().getHijos().toString().replaceAll("\\[", "").replaceAll("\\]", "")});
-                            datos.add(new Object[]{" "});
+                            datos.add(new Object[]{"Apoderado: " + cur.getAlumnos().get(i).getApoderado().getNombre()});
+                            datos.add(new Object[]{"Hijos: " + cur.getAlumnos().get(i).getApoderado().getHijos().toString().replaceAll("\\[", "").replaceAll("\\]", "")});
                             exis += cur.getAlumnos().get(i).getNombre().split(" ")[0];
+                            datos.add(new Object[]{"<br>"});
                         }
                     }
                     generar(datos, curso, s, url, request, response, tipo, "reportApoderado_Alumno.jsp");
@@ -135,6 +234,19 @@ public class solicitarReporte extends HttpServlet {
             }
         } catch (Exception e) {
             request.setAttribute("msg", "Error " + e.getLocalizedMessage());
+            request.getRequestDispatcher("mensaje.jsp").forward(request, response);
+        }
+    }
+
+    private void generarMsg(ArrayList<Object> datos, String curso, ServletContext s, HttpServletRequest request, HttpServletResponse response, String tipo, String msg) throws ServletException, IOException {
+        if (reportes.word(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")
+                && reportes.html(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/html.xsl")).contains("Exito")
+                && reportes.excel(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/excel.xsl")).contains("Exito")
+                && reportes.xml(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")) {
+            request.setAttribute("msg", msg);
+            request.getRequestDispatcher("mensaje.jsp").forward(request, response);
+        } else {
+            request.setAttribute("msg", "Error");
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
