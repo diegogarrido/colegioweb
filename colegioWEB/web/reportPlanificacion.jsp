@@ -27,7 +27,7 @@
         <form method="get" action="${url[3]}">
             <button class="btn btn-4" type="submit">Ver XML <img alt="" src="https://image.flaticon.com/icons/png/512/0/532.png" height="21" width="21"/></button>
         </form>
-            <h5 style="text-align: center">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>
+        <h5 style="text-align: center">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>
         <p>
             <button type="button" class="btn btn-4" style="margin: 0px" onclick="window.location = 'index.jsp';"> 
                 Inicio

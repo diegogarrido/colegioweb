@@ -17,9 +17,11 @@
         <form action="ingreseServlt" method="post">
             <h3>Seleccione un profesor</h3>
             <br>
-            <select name="sel">
-                ${profesores}
-            </select>
+            <div class="styled-select slate" style="margin: auto;">
+                <select name="sel">
+                    ${profesores}
+                </select>
+            </div>
             <br>
             <button type="submit" class="btn btn-4">Elegir profesor</button>
         </form>

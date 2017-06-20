@@ -17,9 +17,11 @@
         <form action="ingreseServlt" method="post">
             <h3>Eliga apoderado para crear reporte(s)</h3>
             <br>
-            <select name="idApoderado">
-                ${apoderados}
-            </select>
+            <div class="styled-select slate" style="margin: auto;">
+                <select name="idApoderado">
+                    ${apoderados}
+                </select>
+            </div>
             <br>
             <button type="submit" class="btn btn-4">Aceptar</button>
             <p>
