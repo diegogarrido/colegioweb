@@ -39,33 +39,47 @@
                 </tbody>
             </table>
         </div>
-        <form action="addAnotacion" method="post">
-            Escriba el motivo de la anotación: <input type="text" name="descripcion">
-            <select name="tipo">
-                <option value="Positiva">Positiva</option>
-                <option value="Negativa">Negativa</option>
-            </select>
-            <input type="hidden" name="curso" value="${curso}">
-            <input type="hidden" name="alumno" value="${alumno}">
-            <input type="submit" value="Añadir anotación">
-
-        </form>
-        <form action="cambiarAnotacion" method="post">
-            <b> Eliga anotacion a modificar </b>        
-            <select name="idAnotacion">
-                <c:forEach var="i" begin="0" end="${anotaciones.size()-1}">
-                    <option value="${i}">
-                        ${anotaciones.get(i).split(",")[1]}
-                    </option>
-                </c:forEach>
-            </select>
-            <br>
-            Re - escriba motivo de la anotacion            
-            <input type="text" name="descripcion">
-            <input type="hidden" name="curso" value="${curso}">
-            <input type="hidden" name="alumno" value="${alumno}">
-            <input type="submit" value="Editar anotacion">
-        </form>
+        <div class="row">
+            <form class="column" action="addAnotacion" method="post" style="text-align: center">
+                <b>Agregar anotación</b>
+                <br><br>
+                <b>Escriba el motivo de la anotación:</b>
+                <input type="text" name="descripcion">
+                <br><br>
+                <b>Tipo:</b>
+                <div class="styled-select slate" style="margin: auto">
+                    <select name="tipo">
+                        <option value="Positiva">Positiva</option>
+                        <option value="Negativa">Negativa</option>
+                    </select>
+                </div>
+                <input type="hidden" name="curso" value="${curso}">
+                <input type="hidden" name="alumno" value="${alumno}">
+                <br>
+                <button class="btn btn-4" type="submit">Añadir anotación</button>
+            </form>
+            <form class="column" action="cambiarAnotacion" method="post" style="text-align: center">
+                <b>Editar Anotación</b>
+                <br><br>
+                <b>Re - escriba motivo de la anotacion:</b>
+                <input type="text" name="descripcion">
+                <br><br>
+                <b style="text-align: center"> Eliga anotacion a modificar:</b>
+                <div class="styled-select slate" style="margin: auto">
+                    <select name="idAnotacion">
+                        <c:forEach var="i" begin="0" end="${anotaciones.size()-1}">
+                            <option value="${i}">
+                                ${anotaciones.get(i).split(",")[1]}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <br>
+                <input type="hidden" name="curso" value="${curso}">
+                <input type="hidden" name="alumno" value="${alumno}">
+                <button class="btn btn-4" type="submit">Editar anotacion</button>
+            </form>
+        </div>
         <p>
             <button type="button" class="btn btn-4" style="margin: 0px" onclick="window.location = 'index.jsp';"> 
                 Inicio
