@@ -13,7 +13,8 @@
         <title>Anotaciones</title>
         <link rel="stylesheet" href="css/pagina.css" media="screen">
         <link rel="stylesheet" href="css/combobox.css" media="screen">
-        <link rel="stylesheet" href="css/tabla.css" media="screen">        
+        <link rel="stylesheet" href="css/tabla.css" media="screen">
+        <link rel="stylesheet" href="css/botones.css" media="screen">
     </head>
     <body>
         <h3>Anotaciones del alumno ${alumno}</h3>
@@ -44,7 +45,10 @@
                 <option value="Positiva">Positiva</option>
                 <option value="Negativa">Negativa</option>
             </select>
+            <input type="hidden" name="curso" value="${curso}">
+            <input type="hidden" name="alumno" value="${alumno}">
             <input type="submit" value="Añadir anotación">
+
         </form>
         <form action="cambiarAnotacion" method="post">
             <b> Eliga anotacion a modificar </b>        

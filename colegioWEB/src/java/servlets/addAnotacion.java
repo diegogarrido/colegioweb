@@ -3,13 +3,17 @@
  */
 package servlets;
 
+import com.proyecto1.Curso;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import services.RetrieveCurso;
+import services.UpdateCurso;
 
 /**
  *
@@ -30,7 +34,38 @@ public class addAnotacion extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
+        try {
+            String alumno = request.getParameter("alumno");
+            String curso = request.getParameter("curso");
+            String tipo = request.getParameter("tipo");
+            String descripcion = "";
+            if (request.getParameter("descripcion").length() > 0) {
+                descripcion = request.getParameter("descripcion");
+                int idAlumno = -1;
+                RetrieveCurso rt = new RetrieveCurso();
+                Curso cur = rt.retrieveCurso(curso);
+                for (int i = 0; i < cur.getAlumnos().size(); i++) {
+                    if (cur.getAlumnos().get(i).getNombre().equals(alumno)) {
+                        idAlumno = i;
+                        break;
+                    }
+                }
+                cur.getAlumnos().get(idAlumno).getAnotaciones().add(tipo + "," + descripcion);
+                UpdateCurso u = new UpdateCurso();
+                u.updateCurso(cur);
+                request.setAttribute("msg", "Anotación añadida exitosamente");
+                request.getRequestDispatcher("mensaje.jsp").forward(request, response);
+            } else {
+                request.setAttribute("msg", "Error: ingrese una descripción");
+                RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
+                dis.forward(request, response);
+            }
+        } catch (Exception ex) {
+            request.setAttribute("msg", "Error: " + ex.getMessage());
+            RequestDispatcher dis = request.getRequestDispatcher("mensaje.jsp");
+            dis.forward(request, response);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
