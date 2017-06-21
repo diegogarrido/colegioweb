@@ -48,16 +48,16 @@
         </form>
         <form action="cambiarAnotacion" method="post">
             <b> Eliga anotacion a modificar </b>        
-            <select name="idAnotacion" id="combobox" onchange="cambiarValue()">
+            <select name="idAnotacion">
                 <c:forEach var="i" begin="0" end="${anotaciones.size()-1}">
-                    <option>
+                    <option value="${i}">
                         ${anotaciones.get(i).split(",")[1]}
                     </option>
                 </c:forEach>
             </select>
             <br>
             Re - escriba motivo de la anotacion            
-            <input type="text" name="descripcion" id="texto" value="${anotaciones.get(i).split(",")[1]}">
+            <input type="text" name="descripcion">
             <input type="hidden" name="curso" value="${curso}">
             <input type="hidden" name="alumno" value="${alumno}">
             <input type="submit" value="Editar anotacion">

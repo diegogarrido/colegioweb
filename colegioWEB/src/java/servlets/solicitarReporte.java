@@ -25,10 +25,10 @@ import services.RetrieveCurso;
  */
 @WebServlet(name = "solicitarReporte", urlPatterns = {"/solicitarReporte"})
 public class solicitarReporte extends HttpServlet {
-
+    
     @EJB
     private RetrieveCurso retrieveCurso;
-
+    
     @EJB
     private Reportes reportes;
 
@@ -152,7 +152,7 @@ public class solicitarReporte extends HttpServlet {
                         datos.add(new Object[]{"Asignatura: " + cur.getAsignaturas().get(idAsignatura).getNombre()});
                         datos.add(new Object[]{"Nombre alumno , Promedio en la asignatura"});
                         datos.add(new Object[]{"<br>"});
-                        for (int i=0;i<cur.getAlumnos().size();i++) {
+                        for (int i = 0; i < cur.getAlumnos().size(); i++) {
                             datos.add(new Object[]{cur.getAlumnos().get(i).getNombre() + " , " + cur.getAlumnos().get(i).getPromedioAsignatura(cur.getAsignaturas().get(idAsignatura).getNombre())});
                         }
                         tipo += " " + cur.getAsignaturas().get(idAsignatura).getProfesor().getNombre();
@@ -226,6 +226,39 @@ public class solicitarReporte extends HttpServlet {
                     generar(datos, curso, s, url, request, response, tipo, "reportApoderado_Alumno.jsp");
                     break;
                 case ("enviar"):
+                    int idApoderado = -1;
+                    if (request.getParameter("idApoderado") != null) {
+                        idApoderado = Integer.parseInt(request.getParameter("idApoderado"));
+                        int cont = cur.getAlumnos().get(idApoderado).getApoderado().getHijos().size();
+                        datos.add(new Object[]{"<b>"});
+                        datos.add(new Object[]{"Reporte Planificación de actividades para apoderado"});
+                        datos.add(new Object[]{"</b>"});
+                        datos.add(new Object[]{"Apoderado: " + cur.getAlumnos().get(idApoderado).getApoderado().getNombre()});
+                        datos.add(new Object[]{"Hijos:"});
+                        for (int i = 0; i < cur.getAlumnos().get(idApoderado).getApoderado().getHijos().size(); i++) {
+                            datos.add(new Object[]{"<b>"});
+                            datos.add(new Object[]{cur.getAlumnos().get(idApoderado).getApoderado().getHijos().get(i)});
+                            datos.add(new Object[]{"</b>"});
+                            for (int j = 0; j < cur.getAsignaturas().size(); j++) {
+                                datos.add(new Object[]{cur.getAsignaturas().get(j).getNombre() + ":"});
+                                datos.add(new Object[]{"Profesor: " + cur.getAsignaturas().get(j).getProfesor().getNombre()});
+                                datos.add(new Object[]{"Nombre actividad - Fecha Actividad"});
+                                for (String planificacion : cur.getAsignaturas().get(j).getPlanificacion()) {
+                                    datos.add(new Object[]{planificacion.split(",")[0] + " - " + planificacion.split(",")[2]});
+                                }
+                                datos.add(new Object[]{"<br>"});
+                            }
+                            datos.add(new Object[]{"<br>"});
+                        }
+                        tipo += " " + cur.getAlumnos().get(idApoderado).getApoderado().getNombre();
+                        String msg = "<h3 style=\"text-align: center\">Reporte Planificación de actividades para apoderado: " + cur.getAlumnos().get(idApoderado).getApoderado().getNombre() + "</h3>\n";
+                        generarMsg(datos, curso, s, request, response, tipo, msg);
+                    } else {
+                        request.setAttribute("reportType", tipo);
+                        request.setAttribute("curso", curso);
+                        request.setAttribute("alumnos", cur.getAlumnos());
+                        request.getRequestDispatcher("reportApoderados_Planificacion.jsp").forward(request, response);
+                    }
                     break;
             }
         } catch (Exception e) {
@@ -233,7 +266,7 @@ public class solicitarReporte extends HttpServlet {
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
-
+    
     private void generarMsg(ArrayList<Object> datos, String curso, ServletContext s, HttpServletRequest request, HttpServletResponse response, String tipo, String msg) throws ServletException, IOException {
         if (reportes.word(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")
                 && reportes.html(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/html.xsl")).contains("Exito")
@@ -259,7 +292,7 @@ public class solicitarReporte extends HttpServlet {
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
-
+    
     private void generar(ArrayList<Object> datos, String curso, ServletContext s, String[] url, HttpServletRequest request, HttpServletResponse response, String tipo, String jsp) throws ServletException, IOException {
         try {
             if (reportes.word(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")
