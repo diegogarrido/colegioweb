@@ -58,6 +58,8 @@
             <br>
             Re - escriba motivo de la anotacion            
             <input type="text" name="descripcion" id="texto" value="${anotaciones.get(i).split(",")[1]}">
+            <input type="hidden" name="curso" value="${curso}">
+            <input type="hidden" name="alumno" value="${alumno}">
             <input type="submit" value="Editar anotacion">
         </form>
         <p>
