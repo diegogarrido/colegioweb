@@ -51,6 +51,7 @@ public class verAnotaciones extends HttpServlet {
             }
             request.setAttribute("anotaciones", cur.getAlumnos().get(idAlumno).getAnotaciones());
             request.setAttribute("alumno", alumno);
+            request.setAttribute("curso", curso);
             request.getRequestDispatcher("verAnotaciones.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("msg", "Error: " + e.getCause());
