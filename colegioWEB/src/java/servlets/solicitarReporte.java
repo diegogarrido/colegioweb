@@ -87,20 +87,7 @@ public class solicitarReporte extends HttpServlet {
                                 datos.add(new Object[]{"<br>"});
                             }
                         }
-                        String msg = "<h3 style=\"text-align: center\">Reporte alumnos del curso " + curso + " con porcentaje bajo " + porcentaje + "%</h3>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".doc\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Word <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".html\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver HTML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xls\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Excel <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xml\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver XML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "            <h5 style=\"text-align: center\">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>";
+                        String msg = "<h3 style=\"text-align: center\">Reporte alumnos del curso " + curso + " con porcentaje bajo " + porcentaje + "%</h3>\n";
                         generarMsg(datos, curso, s, request, response, tipo, msg);
                     } else {
                         request.setAttribute("curso", curso);
@@ -137,28 +124,15 @@ public class solicitarReporte extends HttpServlet {
                         if (cur.getAlumnos().get(idAlumno).estaReprobando()) {
                             datos.add(new Object[]{"<font color=\"red\">"});
                             datos.add(new Object[]{"Condicion: No Aprueba"});
-                            datos.add(new Object[]{"Por: "+cur.getAlumnos().get(idAlumno).razonReprobado()});
+                            datos.add(new Object[]{"Por: " + cur.getAlumnos().get(idAlumno).razonReprobado()});
                             datos.add(new Object[]{"</font>"});
                         } else {
                             datos.add(new Object[]{"<font color=\"green\">"});
                             datos.add(new Object[]{"Condicion: Aprueba"});
                             datos.add(new Object[]{"</font>"});
                         }
-                        tipo+=" "+cur.getAlumnos().get(idAlumno).getNombre();
-                        String msg = "<h3 style=\"text-align: center\">Reporte Porcentaje de asistencia y notas del alumno"+cur.getAlumnos().get(idAlumno).getNombre()+"</h3>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".doc\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Word <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".html\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver HTML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xls\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Descargar Excel <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "        <form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xml\">\n"
-                                + "            <button class=\"btn btn-4\" type=\"submit\">Ver XML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
-                                + "        </form>\n"
-                                + "            <h5 style=\"text-align: center\">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>";
+                        tipo += " " + cur.getAlumnos().get(idAlumno).getNombre();
+                        String msg = "<h3 style=\"text-align: center\">Reporte Porcentaje de asistencia y notas del alumno" + cur.getAlumnos().get(idAlumno).getNombre() + "</h3>\n";
                         generarMsg(datos, curso, s, request, response, tipo, msg);
                     } else {
                         request.setAttribute("curso", curso);
@@ -168,6 +142,28 @@ public class solicitarReporte extends HttpServlet {
                     }
                     break;
                 case ("asignatura"):
+                    int idAsignatura = -1;
+                    if (request.getParameter("idAsignatura") != null) {
+                        idAsignatura = Integer.parseInt(request.getParameter("idAsignatura"));
+                        datos.add(new Object[]{"<b>"});
+                        datos.add(new Object[]{"Reporte Promedio alumnos para Profesor"});
+                        datos.add(new Object[]{"</b>"});
+                        datos.add(new Object[]{"Profesor: " + cur.getAsignaturas().get(idAsignatura).getProfesor().getNombre()});
+                        datos.add(new Object[]{"Asignatura: " + cur.getAsignaturas().get(idAsignatura).getNombre()});
+                        datos.add(new Object[]{"Nombre alumno , Promedio en la asignatura"});
+                        datos.add(new Object[]{"<br>"});
+                        for (int i=0;i<cur.getAlumnos().size();i++) {
+                            datos.add(new Object[]{cur.getAlumnos().get(i).getNombre() + " , " + cur.getAlumnos().get(i).getPromedioAsignatura(cur.getAsignaturas().get(idAsignatura).getNombre())});
+                        }
+                        tipo += " " + cur.getAsignaturas().get(idAsignatura).getProfesor().getNombre();
+                        String msg = "<h3 style=\"text-align: center\">Reporte Promedio alumnos para Profesor " + cur.getAsignaturas().get(idAsignatura).getProfesor().getNombre() + "</h3>\n";
+                        generarMsg(datos, curso, s, request, response, tipo, msg);
+                    } else {
+                        request.setAttribute("reportType", tipo);
+                        request.setAttribute("curso", curso);
+                        request.setAttribute("asignaturas", cur.getAsignaturas());
+                        request.getRequestDispatcher("reportAsignatura.jsp").forward(request, response);
+                    }
                     break;
                 case ("planificacion"):
                     for (int i = 0; i < cur.getAlumnos().size(); i++) {
@@ -243,6 +239,19 @@ public class solicitarReporte extends HttpServlet {
                 && reportes.html(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/html.xsl")).contains("Exito")
                 && reportes.excel(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/excel.xsl")).contains("Exito")
                 && reportes.xml(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")) {
+            msg += "<form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".doc\">\n"
+                    + "<button class=\"btn btn-4\" type=\"submit\">Descargar Word <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                    + "</form>\n"
+                    + "<form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".html\">\n"
+                    + "<button class=\"btn btn-4\" type=\"submit\">Ver HTML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                    + "</form>\n"
+                    + "<form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xls\">\n"
+                    + "<button class=\"btn btn-4\" type=\"submit\">Descargar Excel <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                    + "</form>\n"
+                    + "<form method=\"get\" action=\"reportes/" + tipo + curso.replaceAll(" ", "") + ".xml\">\n"
+                    + "<button class=\"btn btn-4\" type=\"submit\">Ver XML <img alt=\"\" src=\"https://image.flaticon.com/icons/png/512/0/532.png\" height=\"21\" width=\"21\"/></button>\n"
+                    + "</form>\n"
+                    + "<h5 style=\"text-align: center\">se pueden guardar los HTML y XML haciendo click derecho, guardar como</h5>";
             request.setAttribute("msg", msg);
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         } else {

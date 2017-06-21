@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -12,16 +13,21 @@
         <title>Reporte de la asignatura para profesores</title>
         <link rel="stylesheet" href="css/pagina.css" media="screen">
         <link rel="stylesheet" href="css/botones.css" media="screen">
+        <link rel="stylesheet" href="css/combobox.css" media="screen">
     </head>
     <body>
-        <form action="ingreseServlt" method="post">
-            <h3>Seleccione un profesor</h3>
+        <form action="solicitarReporte" method="post">
+            <h3 style="text-align: center">Seleccione un profesor</h3>
             <br>
             <div class="styled-select slate" style="margin: auto;">
-                <select name="sel">
-                    ${profesores}
+                <select name="idAsignatura">
+                    <c:forEach var="i" begin="0" end="${asignaturas.size()-1}">
+                        <option value="${i}">${asignaturas.get(i).getProfesor().getNombre()}</option>
+                    </c:forEach>
                 </select>
             </div>
+            <input type="hidden" name="curso" value="${curso}">
+            <input type="hidden" name="reportType" value="${reportType}">
             <br>
             <button type="submit" class="btn btn-4">Elegir profesor</button>
         </form>
