@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/combobox.css" media="screen">
         <link rel="stylesheet" href="css/tabla.css" media="screen">
         <link rel="stylesheet" href="css/botones.css" media="screen">
+        <link rel="stylesheet" href="css/input.css" media="screen">
     </head>
     <body>
         <h1>Asignatura: ${asignatura}<br>Alumno: ${alumno}<br> Profesor: ${profesor}</h1>
@@ -74,10 +75,9 @@
             </form>
             <form class="column" action="addActividad" method="post" style="text-align: center">
                 <b>Agregar actividad:</b><br>
-                Descripción de la actividad o prueba
+                Descripción de la actividad o prueba:
                 <input type="text" name="descripcion" required>
-                <br><br>
-                Fecha de la actividad
+                Fecha de la actividad:
                 <input type="date" name="fecha" required>
                 <input type="hidden" name="idAsignatura" value="${idAsignatura}">
                 <input type="hidden" name="curso" value="${curso}">

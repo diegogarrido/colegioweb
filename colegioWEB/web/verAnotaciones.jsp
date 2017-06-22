@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/combobox.css" media="screen">
         <link rel="stylesheet" href="css/tabla.css" media="screen">
         <link rel="stylesheet" href="css/botones.css" media="screen">
+        <link rel="stylesheet" href="css/input.css" media="screen">
     </head>
     <body>
         <h3>Anotaciones del alumno ${alumno}</h3>
@@ -44,8 +45,8 @@
                 <b>Agregar anotación</b>
                 <br><br>
                 <b>Escriba el motivo de la anotación:</b>
-                <input type="text" name="descripcion">
-                <br><br>
+                <input type="text" name="descripcion" required>
+                <br>
                 <b>Tipo:</b>
                 <div class="styled-select slate" style="margin: auto">
                     <select name="tipo">
@@ -62,8 +63,8 @@
                 <b>Editar Anotación</b>
                 <br><br>
                 <b>Re - escriba motivo de la anotacion:</b>
-                <input type="text" name="descripcion">
-                <br><br>
+                <input type="text" name="descripcion" required>
+                <br>
                 <b style="text-align: center"> Eliga anotacion a modificar:</b>
                 <div class="styled-select slate" style="margin: auto">
                     <select name="idAnotacion">

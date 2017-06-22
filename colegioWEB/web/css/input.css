@@ -1,0 +1,19 @@
+input[type="text"] {
+    padding: 10px;
+    border: solid 1px #dcdcdc;
+    transition: box-shadow 0.3s, border 0.3s;
+    display: block;
+    margin: auto;
+    height: 5px;
+    width: auto;
+    font-family: sans-serif;
+    font-size: 13.3px;
+    appearance: none;
+    box-shadow: none;
+    /*border-radius: none;*/
+}
+
+input[type="text"]:focus,.glow input[type="text"].focus {
+    border: solid 1px #707070;
+    box-shadow: 0 0 5px 1px #969696;
+}

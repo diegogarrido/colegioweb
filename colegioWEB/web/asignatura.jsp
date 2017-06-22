@@ -12,6 +12,18 @@
         <link rel="stylesheet" href="css/pagina.css" media="screen">
         <link rel="stylesheet" href="css/combobox.css" media="screen">
         <link rel="stylesheet" href="css/botones.css" media="screen">
+        <link rel="stylesheet" href="css/input.css" media="screen">
+        <script>
+            function nuevoProf() {
+                if (document.getElementById("seleccion").value == "Nuevo Profesor") {
+                    document.getElementById("datos").removeAttribute("hidden");
+                    document.getElementById("in").setAttribute("required", "");
+                } else {
+                    document.getElementById("datos").setAttribute("hidden", "");
+                    document.getElementById("in").removeAttribute("required");
+                }
+            }
+        </script>
         <title>Asignatura</title>
     </head>
     <body>
@@ -28,25 +40,28 @@
                         ${asignaturas}
                     </select>
                 </div>
-                    <br>
+                <br>
                 <button class="btn btn-4" type="submit">Ver notas</button>
             </form>
             <form class="column" action="addAsignatura" method="post">
                 <h3>Agregar Asignatura</h3>
                 <input type="hidden" name="curso" value="${curso}">
-                Nombre Asignatura: (ingrese solo el nombre, el nivel se añadirá automáticamente) <br>
-                <input type="text" name="nombreAsignatura"> ${curso}
+                Nombre Asignatura:<br>(ingrese solo el nombre, el nivel se añadirá automáticamente)
                 <br><br>
+                <input type="text" name="nombreAsignatura" required>
+                <br>
                 Profesor:
                 <div class="styled-select slate" style="margin: auto">
-                    <select name="profesor">
+                    <select id="seleccion" name="profesor" onchange="nuevoProf()">
                         ${profesores}
                     </select>
                 </div>
                 <br>
-                Si selecciona Nuevo Profesor<br>Nombre:
-                <input type="text" name="nombreProfesor">
-                <br><br>
+                <div id="datos" hidden>
+                    Nombre:
+                    <input id="in" type="text" name="nombreProfesor">
+                </div>
+                <br>
                 <button class="btn btn-4" type="submit">Añadir</button>
             </form>
         </div>
