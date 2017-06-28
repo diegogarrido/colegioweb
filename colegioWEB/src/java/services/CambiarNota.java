@@ -28,7 +28,7 @@ public class CambiarNota {
         try {
             Curso cur = ret.retrieveCurso(curso);
             if (idActividad < 4) {
-                ArrayList<Integer> indexes = new ArrayList();
+                ArrayList<Integer> indexes = new ArrayList<Integer>();
                 for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotas().size(); i++) {
                     if (cur.getAlumnos().get(idAlumno).getNotas().get(i).contains(asignatura)) {
                         indexes.add(i);
@@ -42,7 +42,7 @@ public class CambiarNota {
                 u.updateCurso(cur);
                 return "Nota cambiada exitosamente";
             } else {
-                ArrayList<Integer> indexes = new ArrayList();
+                ArrayList<Integer> indexes = new ArrayList<Integer>();
                 for (int i = 0; i < cur.getAlumnos().get(idAlumno).getNotasAsig().size(); i++) {
                     if (cur.getAlumnos().get(idAlumno).getNotasAsig().get(i).contains(asignatura)) {
                         indexes.add(i);

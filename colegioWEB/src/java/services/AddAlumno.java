@@ -29,7 +29,7 @@ public class AddAlumno {
      * @return 
      */
     @WebMethod(operationName = "addAlumno")
-    public String addAlumno(@WebParam(name = "ap") Apoderado ap, @WebParam(name = "asistencias") int asistencias, @WebParam(name = "curso") String curso, @WebParam(name = "nombre") String nombre, @WebParam(name = "cantNotas") ArrayList cantNotas, @WebParam(name = "cantNotasAsig") ArrayList cantNotasAsig, @WebParam(name = "apExis") boolean apExis) {
+    public String addAlumno(@WebParam(name = "ap") Apoderado ap, @WebParam(name = "asistencias") int asistencias, @WebParam(name = "curso") String curso, @WebParam(name = "nombre") String nombre, @WebParam(name = "cantNotas") ArrayList<String> cantNotas, @WebParam(name = "cantNotasAsig") ArrayList<String> cantNotasAsig, @WebParam(name = "apExis") boolean apExis) {
         Database dat = new Database();
         ap.getHijos().add(nombre);
         dat.addAlumno(ap, asistencias, curso, nombre, cantNotas, cantNotasAsig, apExis);

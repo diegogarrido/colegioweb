@@ -71,7 +71,7 @@ public class addAsignatura extends HttpServlet {
                 }
                 nombreProf = ("" + nombreProf.charAt(0)).toUpperCase() + nombreProf.substring(1, nombreProf.length()).toLowerCase();
                 prof.setNombre(nombreProf);
-                ArrayList<String> asign = new ArrayList();
+                ArrayList<String> asign = new ArrayList<String>();
                 asign.add(nombreAsign);
                 prof.setAsignaturas(asign);
             } else {

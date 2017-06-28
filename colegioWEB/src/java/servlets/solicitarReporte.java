@@ -25,10 +25,10 @@ import services.RetrieveCurso;
  */
 @WebServlet(name = "solicitarReporte", urlPatterns = {"/solicitarReporte"})
 public class solicitarReporte extends HttpServlet {
-    
+
     @EJB
     private RetrieveCurso retrieveCurso;
-    
+
     @EJB
     private Reportes reportes;
 
@@ -54,7 +54,7 @@ public class solicitarReporte extends HttpServlet {
             if (request.getParameter("reportType") != null) {
                 tipo = request.getParameter("reportType");
                 cur = retrieveCurso.retrieveCurso(curso);
-                datos = new ArrayList();
+                datos = new ArrayList<Object>();
                 url = new String[4];
                 s = getServletContext();
             }
@@ -166,10 +166,10 @@ public class solicitarReporte extends HttpServlet {
                     }
                     break;
                 case ("planificacion"):
+                    datos.add(new Object[]{"<b>"});
+                    datos.add(new Object[]{"Información de todo el curso:"});
+                    datos.add(new Object[]{"</b>"});
                     for (int i = 0; i < cur.getAlumnos().size(); i++) {
-                        datos.add(new Object[]{"<b>"});
-                        datos.add(new Object[]{"Información de todo el curso:"});
-                        datos.add(new Object[]{"</b>"});
                         datos.add(new Object[]{"Alumno: " + cur.getAlumnos().get(i).getNombre() + " Apoderado: " + cur.getAlumnos().get(i).getApoderado().getNombre()});
                         datos.add(new Object[]{"Anotaciones: "});
                         if (cur.getAlumnos().get(i).getAnotaciones().isEmpty()) {
@@ -266,7 +266,7 @@ public class solicitarReporte extends HttpServlet {
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
-    
+
     private void generarMsg(ArrayList<Object> datos, String curso, ServletContext s, HttpServletRequest request, HttpServletResponse response, String tipo, String msg) throws ServletException, IOException {
         if (reportes.word(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")
                 && reportes.html(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/html.xsl")).contains("Exito")
@@ -292,7 +292,7 @@ public class solicitarReporte extends HttpServlet {
             request.getRequestDispatcher("mensaje.jsp").forward(request, response);
         }
     }
-    
+
     private void generar(ArrayList<Object> datos, String curso, ServletContext s, String[] url, HttpServletRequest request, HttpServletResponse response, String tipo, String jsp) throws ServletException, IOException {
         try {
             if (reportes.word(datos, tipo + curso.replaceAll(" ", ""), s.getRealPath("/xslt/word.xsl")).contains("Exito")

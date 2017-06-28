@@ -66,7 +66,7 @@ public class cambiarActividad extends HttpServlet {
             activ = split[0] + "," + split[1] + "," + split[2];
             cur.getAsignaturas().get(idAsignatura).getPlanificacion().set(idActividad, activ);
             if (porcentaje != -1 && idActividad <= 4) {
-                ArrayList<Integer> indexes = new ArrayList();
+                ArrayList<Integer> indexes = new ArrayList<Integer>();
                 for (int i = 0; i < cur.getAlumnos().get(0).getNotas().size(); i++) {
                     if (cur.getAlumnos().get(0).getNotas().get(i).contains(cur.getAsignaturas().get(idAsignatura).getNombre())) {
                         indexes.add(i);
